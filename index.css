@@ -1,6 +1,9 @@
 body {
   background-color: #0099cc;
   color: #fff;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: hidden;
 
   /* Allow mouse dragging. */
   -moz-user-select: none;
@@ -15,6 +18,42 @@ body {
 
   /* Allow canvas to hit the edges of the browser viewport. */
   margin: 0;
+}
+
+#fullscreen-toggle {
+  display: none;
+  position: fixed;
+  top: max(10px, env(safe-area-inset-top));
+  right: max(10px, env(safe-area-inset-right));
+  z-index: 20;
+  padding: 9px 12px;
+  border: 2px solid rgba(0, 0, 0, 0.75);
+  border-radius: 6px;
+  background: rgba(255, 245, 220, 0.9);
+  color: #101010;
+  font: 700 12px/1 Arial, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0;
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.45);
+}
+
+body.fullscreen-supported #fullscreen-toggle {
+  display: block;
+}
+
+body.fullscreen-active #fullscreen-toggle {
+  opacity: 0.15;
+}
+
+body.fullscreen-active #fullscreen-toggle:focus,
+body.fullscreen-active #fullscreen-toggle:hover {
+  opacity: 1;
+}
+
+#screen {
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;
 }
 
 #screen canvas {

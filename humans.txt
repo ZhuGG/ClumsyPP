@@ -1,13 +1,16 @@
 /* TEAM */
 
-Developer: Ellison Leão 
-Site: https://ellisonleao.github.io, https://github.com/ellisonleao
-Twitter: @ellisonleao
-Location: Curitiba, Brazil
+Project: ClumsyPP
+Original Developer: Ellison Leao
+Original Site: https://ellisonleao.github.io, https://github.com/ellisonleao
+Original Location: Curitiba, Brazil
+
+Music: YouTube source provided for ClumsyPP
+Music URL: https://www.youtube.com/watch?v=mCjLODPPLWk
 
 /* SITE */
 
-Last Update: 2014/03/06
+Last Update: 2026/07/09
 Standards: HTML5, CSS3
-Components: MelonJS, jQuery
-Software: VIM, Photoshop
+Components: melonJS
+Software: HTML5 canvas, JavaScript

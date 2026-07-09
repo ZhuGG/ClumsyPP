@@ -1,38 +1,41 @@
 {
-  "name": "clumsy-bird",
+  "name": "clumsy-pp",
   "version": "0.1.0",
-  "description": "Clumsy Bird - A MelonJS port of the famous Flappy Bird game",
-  "homepage": "http://ellisonleao.github.io/clumsy-bird/",
+  "description": "ClumsyPP - A melonJS arcade game based on Clumsy Bird",
+  "homepage": "",
   "repository": {
     "type": "git",
-    "url": "https://github.com/ellisonleao/clumsy-bird"
+    "url": "https://github.com/ZhuGG/ClumsyPP.git"
   },
   "bugs": {
-    "url": "https://github.com/ellisonleao/clumsy-bird/issues"
+    "url": "https://github.com/ZhuGG/ClumsyPP/issues"
   },
   "licenses": [
     {
-      "type": "MIT License",
-      "url": "https://github.com/ellisonleao/clumsy-bird/blob/master/LICENSE"
+      "type": "GPL-3.0",
+      "url": "LICENSE.md"
     }
   ],
   "author": {
-    "name": "Ellison Leão",
-    "email": "ellisonleao@gmail.com"
+    "name": "ClumsyPP contributors"
+  },
+  "contributors": [
+    {
+      "name": "Ellison Leao",
+      "url": "https://github.com/ellisonleao"
+    }
+  ],
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "start": "npm run dev",
+    "build": "node --preserve-symlinks-main scripts/build.mjs",
+    "preview": "vite preview --host 0.0.0.0",
+    "check": "node --preserve-symlinks-main scripts/check-syntax.mjs"
   },
   "engines": {
-    "node": ">= 0.8.0"
+    "node": ">= 20.0.0"
   },
-  "dependencies": {},
   "devDependencies": {
-    "grunt": "~0.4.1",
-    "grunt-contrib-jshint": "~0.8.0",
-    "grunt-contrib-concat": "~0.2.0",
-    "grunt-contrib-clean": "~0.4.0",
-    "grunt-contrib-uglify": "~0.2.7",
-    "grunt-contrib-nodeunit": "~0.1.2",
-    "grunt-contrib-connect": "^0.7.1",
-    "grunt-replace": "~0.4.3",
-    "grunt-manifest": "~0.4.0"
+    "vite": "^8.1.4"
   }
 }

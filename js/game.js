@@ -4,7 +4,132 @@ var game = {
         steps: 0,
         start: false,
         newHiScore: false,
-        muted: false
+        muted: false,
+        topSteps: 0
+    },
+
+    meta: {
+        title: "ClumsyPP",
+        musicCredit: "Music: https://www.youtube.com/watch?v=mCjLODPPLWk",
+        originalCredit: "Based on Clumsy Bird by Ellison Leao"
+    },
+
+    storage: {
+        key: "clumsypp.topSteps",
+
+        loadTopSteps: function() {
+            var value = 0;
+            try {
+                if (typeof localStorage !== "undefined") {
+                    value = parseInt(localStorage.getItem(this.key), 10) || 0;
+                }
+            } catch (e) {
+                value = 0;
+            }
+            game.data.topSteps = value;
+            return value;
+        },
+
+        saveTopSteps: function(value) {
+            game.data.topSteps = value;
+            try {
+                if (typeof localStorage !== "undefined") {
+                    localStorage.setItem(this.key, value);
+                }
+            } catch (e) {
+                return;
+            }
+        }
+    },
+
+    fullscreen: {
+        button: null,
+
+        init: function() {
+            this.button = document.getElementById("fullscreen-toggle");
+            if (!this.button || !this.isSupported() || !this.isMobileLike()) {
+                return;
+            }
+
+            document.body.classList.add("fullscreen-supported");
+            this.button.addEventListener("click", this.toggle.bind(this));
+            document.addEventListener("fullscreenchange", this.sync.bind(this));
+            document.addEventListener("webkitfullscreenchange", this.sync.bind(this));
+            this.sync();
+        },
+
+        isMobileLike: function() {
+            return window.matchMedia("(hover: none), (pointer: coarse)").matches ||
+                /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+        },
+
+        isSupported: function() {
+            var target = document.documentElement;
+            return !!(target.requestFullscreen || target.webkitRequestFullscreen);
+        },
+
+        currentElement: function() {
+            return document.fullscreenElement || document.webkitFullscreenElement;
+        },
+
+        toggle: function() {
+            if (this.currentElement()) {
+                this.exit();
+            } else {
+                this.enter();
+            }
+        },
+
+        enter: function() {
+            var target = document.documentElement;
+            var request = target.requestFullscreen || target.webkitRequestFullscreen;
+
+            if (!request) {
+                return;
+            }
+
+            Promise.resolve(request.call(target)).then(function() {
+                game.fullscreen.lockLandscape();
+                game.fullscreen.sync();
+            }).catch(function() {
+                game.fullscreen.sync();
+            });
+        },
+
+        exit: function() {
+            var exit = document.exitFullscreen || document.webkitExitFullscreen;
+
+            if (exit) {
+                exit.call(document);
+            }
+        },
+
+        lockLandscape: function() {
+            if (screen.orientation && screen.orientation.lock) {
+                screen.orientation.lock("landscape").catch(function() {});
+            }
+        },
+
+        sync: function() {
+            var active = !!this.currentElement();
+            document.body.classList.toggle("fullscreen-active", active);
+            if (this.button) {
+                this.button.textContent = active ? "Exit" : "Fullscreen";
+                this.button.setAttribute(
+                    "aria-label",
+                    active ? "Exit fullscreen" : "Enter fullscreen"
+                );
+            }
+            window.setTimeout(function() {
+                if (typeof Event === "function") {
+                    window.dispatchEvent(new Event("resize"));
+                } else {
+                    var event = document.createEvent("Event");
+                    event.initEvent("resize", true, true);
+                    window.dispatchEvent(event);
+                }
+            }, 100);
+        }
     },
 
     resources: [
@@ -30,6 +155,8 @@ var game = {
     ],
 
     "onload": function() {
+        game.fullscreen.init();
+
         if (!me.video.init(900, 600, {
             wrapper: "screen",
             scale : "auto",
@@ -43,6 +170,8 @@ var game = {
     },
 
     "loaded": function() {
+        game.storage.loadTopSteps();
+
         me.state.set(me.state.MENU, new game.TitleScreen());
         me.state.set(me.state.PLAY, new game.PlayScreen());
         me.state.set(me.state.GAME_OVER, new game.GameOverScreen());
