@@ -1,19 +1,37 @@
-Creating a Clumsy Bird Customization
-====================================
+# Customizing ClumsyPP
 
-Sometimes play the regular version becomes very boring and you want
-to start building your own. Great news! With this repo you can have your own
-customization of Clumsy Bird to play with your friends.
+ClumsyPP is designed to be easy to reskin. Replace the files below with your own assets, keeping the same filenames, formats, and dimensions unless you also update the game code.
 
-If you want to add your own assets to the game, this is the list of the assets used in this game. Just create or change the image
-below with your own customization. Remember to keep the names and sizes.
+## Images
 
-- [bg.png](https://raw.githubusercontent.com/ellisonleao/clumsy-bird/gh-pages/data/img/bg.png) - Size: `900x504px`. This is the Background image used in the game.
-- [clumsy.png](https://raw.githubusercontent.com/ellisonleao/clumsy-bird/gh-pages/data/img/clumsy.png) - Size: `255x60px` . This is the bird animation image. It contains 3 animation frames.
-- [gameover.png](https://raw.githubusercontent.com/ellisonleao/clumsy-bird/gh-pages/data/img/gameover.png) - Size: `245x132px`. The Game Over logo.
-- [gameoverbg.png](https://raw.githubusercontent.com/ellisonleao/clumsy-bird/gh-pages/data/img/gameoverbg.png) - Size: `505x361px`. This is the Game Over square background used for the scores.
-- [getready.png](https://raw.githubusercontent.com/ellisonleao/clumsy-bird/gh-pages/data/img/getready.png) - Size: `405x134px`. This is the initial message before the game starts.
-- [ground.png](https://raw.githubusercontent.com/ellisonleao/clumsy-bird/gh-pages/data/img/ground.png) - Size: `900x96px`. The animated ground image.
-- [logo.png](https://raw.githubusercontent.com/ellisonleao/clumsy-bird/gh-pages/data/img/logo.png) - Size: `351x145px`. The game logo.
-- [new.png](https://raw.githubusercontent.com/ellisonleao/clumsy-bird/gh-pages/data/img/new.png) - Size: `48x48px`. This is the NEW notification when the user reaches a new score.
-- [pipe.png](https://raw.githubusercontent.com/ellisonleao/clumsy-bird/gh-pages/data/img/pipe.png) - Size: `148x1664px`. Why the hell this is so big?! Because of the logic used for the random pipes position.
+- `data/img/bg.png` - `900x504px` background image.
+- `data/img/clumsy.png` - `255x60px` player animation sheet with 3 frames.
+- `data/img/gameover.png` - `245x132px` Game Over logo.
+- `data/img/gameoverbg.png` - `505x361px` Game Over score panel.
+- `data/img/getready.png` - `405x134px` start prompt image.
+- `data/img/ground.png` - `900x96px` scrolling ground image.
+- `data/img/logo.png` - `351x145px` title logo.
+- `data/img/new.png` - `48x48px` new high score badge.
+- `data/img/pipe.png` - `148x1664px` obstacle sheet used by the pipe placement logic.
+- `data/img/share.png` - share button.
+- `data/img/tweet.png` - tweet button.
+- `data/img/touch-icon-iphone.png` - mobile home-screen icon.
+- `data/img/touch-icon-iphone-retina.png` - high-resolution mobile home-screen icon.
+- `data/img/favicon.ico` - browser icon.
+
+## Audio
+
+- `data/bgm/theme.mp3` and `data/bgm/theme.ogg` - background music.
+- `data/sfx/wing.mp3`, `data/sfx/wing.ogg`, and `data/sfx/wing.wav` - flap sound.
+- `data/sfx/hit.mp3` and `data/sfx/hit.ogg` - collision sound.
+- `data/sfx/lose.mp3` and `data/sfx/lose.ogg` - game over sound.
+
+Music credit for this project: https://www.youtube.com/watch?v=mCjLODPPLWk
+
+## Rebuild
+
+If you only replace files in `data/`, you do not need to rebuild while using the dev server. Before publishing to GitHub Pages, refresh the static output:
+
+```sh
+npm run build
+```

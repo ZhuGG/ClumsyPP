@@ -17,6 +17,7 @@ game.HUD.Container = me.Container.extend({
 
         // add our child score object at the top left corner
         this.addChild(new game.HUD.ScoreItem(5, 5));
+        this.addChild(new game.HUD.StatusItem(5, 5));
     }
 });
 
@@ -35,6 +36,25 @@ game.HUD.ScoreItem = me.Renderable.extend({
     draw: function (renderer) {
         if (game.data.start && me.state.isCurrent(me.state.PLAY))
             this.stepsFont.draw(renderer, game.data.steps, me.game.viewport.width/2, 10);
+    }
+
+});
+
+game.HUD.StatusItem = me.Renderable.extend({
+    init: function(x, y) {
+        this._super(me.Renderable, "init", [x, y, 10, 10]);
+        this.font = new me.Font('gamefont', 16, '#000', 'right');
+        this.floating = true;
+    },
+
+    draw: function (renderer) {
+        if (me.state.isCurrent(me.state.PLAY)) {
+            var status = 'BEST ' + game.data.topSteps;
+            if (game.data.muted) {
+                status += '   MUTED';
+            }
+            this.font.draw(renderer, status, me.game.viewport.width - 18, 18);
+        }
     }
 
 });

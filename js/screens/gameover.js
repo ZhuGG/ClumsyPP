@@ -5,20 +5,13 @@ game.GameOverScreen = me.ScreenObject.extend({
     },
 
     onResetEvent: function() {
-        //save section
-        this.savedData = {
-            score: game.data.score,
-            steps: game.data.steps
-        };
-        me.save.add(this.savedData);
-
-        if (!me.save.topSteps) me.save.add({topSteps: game.data.steps});
-        if (game.data.steps > me.save.topSteps) {
-            me.save.topSteps = game.data.steps;
+        var topSteps = game.storage.loadTopSteps();
+        if (game.data.steps > topSteps) {
+            game.storage.saveTopSteps(game.data.steps);
             game.data.newHiScore = true;
         }
         me.input.bindKey(me.input.KEY.ENTER, "enter", true);
-        me.input.bindKey(me.input.KEY.SPACE, "enter", false)
+        me.input.bindKey(me.input.KEY.SPACE, "enter", false);
         me.input.bindPointer(me.input.pointer.LEFT, me.input.KEY.ENTER);
 
         this.handler = me.event.subscribe(me.event.KEYDOWN,
@@ -66,30 +59,33 @@ game.GameOverScreen = me.ScreenObject.extend({
                 this._super(me.Renderable, 'init',
                     [0, 0, me.game.viewport.width/2, me.game.viewport.height/2]
                 );
-                this.font = new me.Font('gamefont', 40, 'black', 'left');
-                this.steps = 'Steps: ' + game.data.steps.toString();
-                this.topSteps= 'Higher Step: ' + me.save.topSteps.toString();
+                this.font = new me.Font('gamefont', 36, 'black', 'center');
+                this.smallFont = new me.Font('gamefont', 18, 'black', 'center');
+                this.steps = 'SCORE: ' + game.data.steps.toString();
+                this.topSteps= 'BEST: ' + game.data.topSteps.toString();
+                this.retry = me.device.touch ? 'TAP TO RETRY' : 'SPACE / CLICK TO RETRY';
             },
 
             draw: function (renderer) {
-                var stepsText = this.font.measureText(renderer, this.steps);
-                var topStepsText = this.font.measureText(renderer, this.topSteps);
-                var scoreText = this.font.measureText(renderer, this.score);
-
-                //steps
                 this.font.draw(
                     renderer,
                     this.steps,
-                    me.game.viewport.width/2 - stepsText.width/2 - 60,
+                    me.game.viewport.width/2,
                     me.game.viewport.height/2
                 );
 
-                //top score
                 this.font.draw(
                     renderer,
                     this.topSteps,
-                    me.game.viewport.width/2 - stepsText.width/2 - 60,
+                    me.game.viewport.width/2,
                     me.game.viewport.height/2 + 50
+                );
+
+                this.smallFont.draw(
+                    renderer,
+                    this.retry,
+                    me.game.viewport.width/2,
+                    me.game.viewport.height/2 + 104
                 );
             }
         }));
